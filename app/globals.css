@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  :root {
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+
+    /* Updated color scheme to match purple/magenta theme */
+    --background: oklch(0.98 0.005 280);
+    --foreground: oklch(0.15 0.02 280);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.15 0.02 280);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.15 0.02 280);
+
+    /* Primary: Vibrant magenta/pink */
+    --primary: oklch(0.65 0.25 320);
+    --primary-foreground: rgb(204, 70, 235);
+
+    /* Secondary: Deep purple */
+    --secondary: oklch(0.25 0.15 280);
+    --secondary-foreground: oklch(0.95 0.02 280);
+
+    /* Accent: Bright cyan for highlights */
+    --accent: oklch(0.7 0.2 200);
+    --accent-foreground: oklch(0.15 0.02 280);
+
+    --muted: oklch(0.96 0.01 280);
+    --muted-foreground: oklch(0.5 0.02 280);
+    --destructive: oklch(0.6 0.25 15);
+    --destructive-foreground: oklch(1 0 0);
+    --border: oklch(0.9 0.01 280);
+    --input: oklch(0.95 0.01 280);
+    --ring: oklch(0.65 0.25 320);
+    --radius: 0.75rem;
+
+    /* Sidebar colors */
+    --sidebar-background: oklch(0.98 0.005 280);
+    --sidebar-foreground: oklch(0.15 0.02 280);
+    --sidebar-primary: oklch(0.65 0.25 320);
+    --sidebar-primary-foreground: oklch(1 0 0);
+    --sidebar-accent: oklch(0.96 0.01 280);
+    --sidebar-accent-foreground: oklch(0.15 0.02 280);
+    --sidebar-border: oklch(0.9 0.01 280);
+    --sidebar-ring: oklch(0.65 0.25 320);
+  }
+
+  .dark {
+    --background: oklch(0.08 0.02 280);
+    --foreground: oklch(0.95 0.02 280);
+    --card: oklch(0.12 0.02 280);
+    --card-foreground: oklch(0.95 0.02 280);
+    --popover: oklch(0.12 0.02 280);
+    --popover-foreground: oklch(0.95 0.02 280);
+
+    /* Primary: Brighter magenta for dark mode */
+    --primary: oklch(0.75 0.25 320);
+    --primary-foreground: oklch(0.08 0.02 280);
+
+    /* Secondary: Lighter purple */
+    --secondary: oklch(0.35 0.15 280);
+    --secondary-foreground: oklch(0.95 0.02 280);
+
+    /* Accent: Bright cyan */
+    --accent: oklch(0.8 0.2 200);
+    --accent-foreground: oklch(0.08 0.02 280);
+
+    --muted: oklch(0.15 0.02 280);
+    --muted-foreground: oklch(0.6 0.02 280);
+    --destructive: oklch(0.7 0.25 15);
+    --destructive-foreground: oklch(0.08 0.02 280);
+    --border: oklch(0.2 0.02 280);
+    --input: oklch(0.15 0.02 280);
+    --ring: oklch(0.75 0.25 320);
+
+    /* Sidebar colors for dark mode */
+    --sidebar-background: oklch(0.08 0.02 280);
+    --sidebar-foreground: oklch(0.95 0.02 280);
+    --sidebar-primary: oklch(0.75 0.25 320);
+    --sidebar-primary-foreground: oklch(0.08 0.02 280);
+    --sidebar-accent: oklch(0.15 0.02 280);
+    --sidebar-accent-foreground: oklch(0.95 0.02 280);
+    --sidebar-border: oklch(0.2 0.02 280);
+    --sidebar-ring: oklch(0.75 0.25 320);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* Enhanced gradient backgrounds with purple/magenta theme */
+.hero-gradient {
+  background: linear-gradient(
+    135deg,
+    oklch(0.25 0.15 280) 0%,
+    oklch(0.3 0.18 300) 25%,
+    oklch(0.35 0.2 320) 50%,
+    oklch(0.4 0.22 340) 75%,
+    oklch(0.45 0.25 350) 100%
+  );
+  position: relative;
+}
+
+.hero-gradient::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Enhanced card hover effects */
+.feature-card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid oklch(0.9 0.01 280);
+  background: linear-gradient(145deg, oklch(1 0 0), oklch(0.99 0.005 280));
+}
+
+.feature-card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px oklch(0.65 0.25 320 / 0.2), 0 0 20px
+    oklch(0.65 0.25 320 / 0.1);
+  border-color: oklch(0.65 0.25 320 / 0.3);
+}
+
+/* Button enhancements for better UX */
+.btn-primary {
+  background: linear-gradient(135deg, oklch(0.65 0.25 320), oklch(0.7 0.25 340));
+  border: none;
+  box-shadow: 0 4px 15px oklch(0.65 0.25 320 / 0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, oklch(0.7 0.25 320), oklch(0.75 0.25 340));
+  box-shadow: 0 6px 20px oklch(0.65 0.25 320 / 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 2px solid oklch(0.95 0.02 280 / 0.3);
+  color: oklch(0.95 0.02 280);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: oklch(0.95 0.02 280 / 0.1);
+  border-color: oklch(0.95 0.02 280 / 0.6);
+  box-shadow: 0 4px 15px oklch(0.95 0.02 280 / 0.2);
+}
+
+/* Navigation enhancements */
+.nav-glass {
+  background: oklch(1 0 0 / 0.8);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid oklch(0.9 0.01 280 / 0.5);
+}
+
+/* Icon enhancements */
+.icon-primary {
+  color: oklch(0.65 0.25 320);
+  filter: drop-shadow(0 2px 4px oklch(0.65 0.25 320 / 0.2));
+}
+
+.icon-accent {
+  color: oklch(0.7 0.2 200);
+  filter: drop-shadow(0 2px 4px oklch(0.7 0.2 200 / 0.2));
+}
+
+/* Typography improvements */
+.heading-gradient {
+  background: linear-gradient(135deg, oklch(0.95 0.02 280), oklch(0.8 0.1 300));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Interactive elements */
+.interactive-hover {
+  transition: all 0.2s ease;
+}
+
+.interactive-hover:hover {
+  color: oklch(0.65 0.25 320);
+  transform: translateY(-1px);
+}
