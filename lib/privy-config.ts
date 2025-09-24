@@ -1,4 +1,4 @@
-import { avalanche, avalancheFuji } from "viem/chains"
+import { base, baseSepolia } from "viem/chains"
 
 export const privyConfig = {
   appId:
@@ -14,8 +14,8 @@ export const privyConfig = {
       accentColor: "#FF6B35",
       logo: "/logo.png",
     },
-    defaultChain: avalancheFuji,
-    supportedChains: [avalanche, avalancheFuji],
+    defaultChain: baseSepolia,
+    supportedChains: [base, baseSepolia],
     embeddedWallets: {
       createOnLogin: "users-without-wallets",
     },
