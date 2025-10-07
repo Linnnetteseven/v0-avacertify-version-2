@@ -54,17 +54,17 @@ export default function VerifyPage() {
         </div>
 
         <Tabs defaultValue="single" className="max-w-4xl mx-auto">
-          <TabsList className="grid w-full grid-cols-2 bg-muted/30 p-1 rounded-xl h-12 mb-8">
+          <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1.5 rounded-xl h-14 mb-8 shadow-inner">
             <TabsTrigger
               value="single"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg font-semibold transition-all duration-300 rounded-lg flex items-center gap-2"
+              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <FileSearch className="h-4 w-4" />
               Single Verification
             </TabsTrigger>
             <TabsTrigger
               value="batch"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg font-semibold transition-all duration-300 rounded-lg flex items-center gap-2"
+              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <Users className="h-4 w-4" />
               Batch Verification
@@ -95,25 +95,25 @@ export default function VerifyPage() {
                         value={tokenId}
                         onChange={(e) => setTokenId(e.target.value)}
                         placeholder="Enter Token ID (e.g., 1234)"
-                        className="bg-background/50 border-border/50 focus:border-primary transition-colors text-center text-lg font-mono"
+                        className="bg-background/50 border-border/50 focus:border-primary transition-colors text-center text-lg font-mono h-12"
                         required
                       />
                     </div>
 
                     <Button
                       type="submit"
-                      className="w-full h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-white font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="w-full h-14 bg-gradient-to-r from-primary via-primary to-accent hover:from-primary/90 hover:via-primary/90 hover:to-accent/90 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl"
                       disabled={isVerifying || !tokenId.trim()}
                     >
                       {isVerifying ? (
                         <>
-                          <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white mr-2"></div>
-                          Verifying...
+                          <div className="animate-spin rounded-full h-6 w-6 border-3 border-white/30 border-t-white mr-3"></div>
+                          <span>Verifying...</span>
                         </>
                       ) : (
                         <>
-                          <Search className="h-5 w-5 mr-2" />
-                          Verify Certificate
+                          <Search className="h-6 w-6 mr-3" />
+                          <span>Verify Certificate</span>
                         </>
                       )}
                     </Button>
@@ -129,7 +129,6 @@ export default function VerifyPage() {
               </Alert>
             )}
 
-            {/* Verification Result */}
             {verificationResult && (
               <div className="space-y-6">
                 <CertificateDisplay
@@ -145,7 +144,7 @@ export default function VerifyPage() {
                   <Button
                     onClick={handleReset}
                     variant="outline"
-                    className="border-primary/30 hover:bg-primary/10 bg-transparent"
+                    className="border-primary/50 hover:bg-primary/10 bg-background/80 backdrop-blur-sm font-semibold h-12 px-8"
                   >
                     Verify Another Certificate
                   </Button>
@@ -159,7 +158,6 @@ export default function VerifyPage() {
           </TabsContent>
         </Tabs>
 
-        {/* How it Works */}
         {!verificationResult && (
           <div className="max-w-4xl mx-auto mt-16">
             <h2 className="text-2xl font-bold text-center mb-8">How Certificate Verification Works</h2>

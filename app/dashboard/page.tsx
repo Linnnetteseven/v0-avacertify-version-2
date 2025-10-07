@@ -334,19 +334,19 @@ export default function DashboardPage() {
         </div>
 
         <Tabs defaultValue="issue" className="space-y-6">
-          <TabsList className="bg-muted/30 p-1 rounded-xl h-12">
+          <TabsList className="bg-muted/50 p-1.5 rounded-xl h-14 shadow-inner">
             <TabsTrigger
               value="issue"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg font-semibold transition-all duration-300 rounded-lg flex items-center gap-2"
+              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11 px-6"
             >
-              <Plus className="h-4 w-4" />
-              Issue Certificate
+              <Plus className="h-5 w-5" />
+              Issue Certificates
             </TabsTrigger>
             <TabsTrigger
               value="manage"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg font-semibold transition-all duration-300 rounded-lg flex items-center gap-2"
+              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11 px-6"
             >
-              <List className="h-4 w-4" />
+              <List className="h-5 w-5" />
               Manage Certificates
             </TabsTrigger>
           </TabsList>

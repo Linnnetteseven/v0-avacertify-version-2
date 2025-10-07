@@ -1,4 +1,4 @@
-import { base, baseSepolia } from "viem/chains"
+import { avalanche, avalancheFuji } from "viem/chains"
 
 export const privyConfig = {
   appId:
@@ -8,16 +8,20 @@ export const privyConfig = {
       return "your-privy-app-id"
     })(),
   config: {
-    loginMethods: ["wallet", "email"],
+    loginMethods: ["email", "wallet"],
     appearance: {
       theme: "light",
-      accentColor: "#FF6B35",
-      logo: "/logo.png",
+      accentColor: "#8B5CF6",
+      logo: "/images/avacertify-logo.png",
+      landingHeader: "Welcome to AvaCertify",
+      loginMessage: "Sign in to issue and verify certificates",
+      showWalletLoginFirst: false,
     },
-    defaultChain: baseSepolia,
-    supportedChains: [base, baseSepolia],
+    defaultChain: avalancheFuji,
+    supportedChains: [avalanche, avalancheFuji],
     embeddedWallets: {
       createOnLogin: "users-without-wallets",
+      noPromptOnSignature: false,
     },
     legal: {
       termsAndConditionsUrl: undefined,

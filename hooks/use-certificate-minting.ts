@@ -131,20 +131,44 @@ export function useCertificateMinting() {
 
   const mintCertificate = async (certificateData: CertificateData): Promise<MintResult> => {
     if (!ready || !authenticated || !user) {
-      return { success: false, error: "User not authenticated" }
+      console.log("[v0] User not authenticated, cannot mint certificate")
+      return { success: false, error: "Please connect your wallet to mint certificates" }
     }
 
-    const wallet = wallets.find((w) => w.walletClientType === "privy")
+    const wallet = wallets.find((w) => w.walletClientType === "privy") || wallets[0]
+
     if (!wallet) {
-      return { success: false, error: "No wallet connected" }
+      console.log("[v0] No wallet found")
+      return { success: false, error: "No wallet connected. Please connect your wallet first." }
     }
+
+    setIsMinting(true)
 
     try {
-      // Switch to Avalanche Fuji if needed
-      await wallet.switchChain(avalancheFuji.id)
+      console.log("[v0] Starting certificate minting process...")
 
-      // Get the EIP1193 provider
-      const provider = await wallet.getEthereumProvider()
+      try {
+        await wallet.switchChain(avalancheFuji.id)
+        console.log("[v0] Switched to Avalanche Fuji network")
+      } catch (switchError: any) {
+        console.error("[v0] Failed to switch chain:", switchError)
+        return {
+          success: false,
+          error: "Failed to switch to Avalanche Fuji network. Please switch manually.",
+        }
+      }
+
+      let provider
+      try {
+        provider = await wallet.getEthereumProvider()
+        console.log("[v0] Got Ethereum provider")
+      } catch (providerError: any) {
+        console.error("[v0] Failed to get provider:", providerError)
+        return {
+          success: false,
+          error: "Failed to connect to wallet provider. Please try reconnecting your wallet.",
+        }
+      }
 
       // Create Viem wallet client
       const walletClient = createViemWalletClient(provider)
@@ -231,6 +255,8 @@ export function useCertificateMinting() {
         success: false,
         error: errorMessage,
       }
+    } finally {
+      setIsMinting(false)
     }
   }
 
@@ -239,6 +265,20 @@ export function useCertificateMinting() {
     onProgress?: (current: number, total: number) => void,
   ): Promise<BatchMintResult> => {
     if (!ready || !authenticated || !user) {
+      console.log("[v0] User not authenticated, cannot mint batch certificates")
+      return {
+        success: false,
+        results: [],
+        successCount: 0,
+        failureCount: certificates.length,
+        totalProcessed: 0,
+      }
+    }
+
+    const wallet = wallets.find((w) => w.walletClientType === "privy") || wallets[0]
+
+    if (!wallet) {
+      console.log("[v0] No wallet found for batch minting")
       return {
         success: false,
         results: [],

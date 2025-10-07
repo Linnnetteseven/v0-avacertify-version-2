@@ -12,7 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Calendar } from "@/components/ui/calendar"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { CalendarIcon, Plus, X, Upload, Download, FileText, Award, Users } from "lucide-react"
+import { CalendarIcon, Plus, X, Upload, Download, FileText, Award, Users, Send } from "lucide-react"
 import { format } from "date-fns"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/hooks/use-toast"
@@ -221,18 +221,18 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 bg-muted/30 p-1 rounded-xl h-12">
+        <Tabs value={activeTab} onValueChange={setActiveTab} defaultValue="single" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1.5 rounded-xl h-14 shadow-inner">
             <TabsTrigger
               value="single"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg font-semibold transition-all duration-300 rounded-lg flex items-center gap-2"
+              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <Award className="h-4 w-4" />
               Single Certificate
             </TabsTrigger>
             <TabsTrigger
               value="batch"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg font-semibold transition-all duration-300 rounded-lg flex items-center gap-2"
+              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <Users className="h-4 w-4" />
               Batch Certificates
@@ -442,18 +442,18 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-white font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+                className="w-full h-14 bg-gradient-to-r from-primary via-primary to-accent hover:from-primary/90 hover:via-primary/90 hover:to-accent/90 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-3 rounded-xl"
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white"></div>
-                    Minting Certificate...
+                    <div className="animate-spin rounded-full h-6 w-6 border-3 border-white/30 border-t-white"></div>
+                    <span>Minting Certificate...</span>
                   </>
                 ) : (
                   <>
-                    <Award className="h-5 w-5" />
-                    Issue Certificate
+                    <Send className="h-6 w-6" />
+                    <span>Issue Certificate</span>
                   </>
                 )}
               </Button>
@@ -623,18 +623,20 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
 
               <Button
                 type="submit"
-                className="w-full h-12 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 text-white font-semibold text-base shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+                className="w-full h-14 bg-gradient-to-r from-primary via-primary to-accent hover:from-primary/90 hover:via-primary/90 hover:to-accent/90 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-3 rounded-xl"
                 disabled={isLoading || batchRecipients.length === 0}
               >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white"></div>
-                    Minting Certificates...
+                    <div className="animate-spin rounded-full h-6 w-6 border-3 border-white/30 border-t-white"></div>
+                    <span>Minting Certificates...</span>
                   </>
                 ) : (
                   <>
-                    <Users className="h-5 w-5" />
-                    Issue {batchRecipients.length} Certificates
+                    <Send className="h-6 w-6" />
+                    <span>
+                      Issue {batchRecipients.length} Certificate{batchRecipients.length !== 1 ? "s" : ""}
+                    </span>
                   </>
                 )}
               </Button>
