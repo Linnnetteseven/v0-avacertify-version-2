@@ -57,14 +57,14 @@ export default function VerifyPage() {
           <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1.5 rounded-xl h-14 mb-8 shadow-inner">
             <TabsTrigger
               value="single"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-foreground data-[state=inactive]:hover:text-primary data-[state=inactive]:hover:bg-muted font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <FileSearch className="h-4 w-4" />
               Single Verification
             </TabsTrigger>
             <TabsTrigger
               value="batch"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-foreground data-[state=inactive]:hover:text-primary data-[state=inactive]:hover:bg-muted font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <Users className="h-4 w-4" />
               Batch Verification
@@ -102,7 +102,7 @@ export default function VerifyPage() {
 
                     <Button
                       type="submit"
-                      className="w-full h-14 bg-gradient-to-r from-primary via-primary to-accent hover:from-primary/90 hover:via-primary/90 hover:to-accent/90 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl"
+                      className="w-full h-14 bg-gradient-to-r from-primary via-accent to-accent hover:from-primary/90 hover:via-accent/90 hover:to-accent/90 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 rounded-xl"
                       disabled={isVerifying || !tokenId.trim()}
                     >
                       {isVerifying ? (

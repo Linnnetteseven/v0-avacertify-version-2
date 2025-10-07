@@ -211,7 +211,7 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
 
   return (
     <Card className="w-full max-w-4xl mx-auto border-0 shadow-xl bg-card/50 backdrop-blur-sm">
-      <CardHeader className="text-center pb-6">
+      <CardHeader className="text-center pb-4">
         <CardTitle className="text-2xl font-bold text-foreground flex items-center justify-center gap-2">
           <Award className="h-6 w-6 text-primary" />
           Issue Certificates
@@ -221,18 +221,18 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Tabs value={activeTab} onValueChange={setActiveTab} defaultValue="single" className="space-y-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab} defaultValue="single" className="space-y-4">
           <TabsList className="grid w-full grid-cols-2 bg-muted/50 p-1.5 rounded-xl h-14 shadow-inner">
             <TabsTrigger
               value="single"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-foreground data-[state=inactive]:hover:text-primary data-[state=inactive]:hover:bg-muted font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <Award className="h-4 w-4" />
               Single Certificate
             </TabsTrigger>
             <TabsTrigger
               value="batch"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-foreground data-[state=inactive]:hover:text-primary data-[state=inactive]:hover:bg-muted font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11"
             >
               <Users className="h-4 w-4" />
               Batch Certificates
@@ -241,14 +241,14 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
 
           {/* Single Certificate Tab */}
           <TabsContent value="single" className="space-y-0">
-            <form onSubmit={handleSingleSubmit} className="space-y-8">
-              <div className="space-y-6">
+            <form onSubmit={handleSingleSubmit} className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center gap-2 pb-2 border-b border-border/50">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <h3 className="text-lg font-semibold text-foreground">Recipient Information</h3>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label htmlFor="recipientName" className="text-sm font-medium text-foreground">
                       Full Name
@@ -295,7 +295,7 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
               </div>
 
               {/* Certificate Details */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center gap-2 pb-2 border-b border-border/50">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
                   <h3 className="text-lg font-semibold text-foreground">Certificate Details</h3>
@@ -442,17 +442,17 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
 
               <Button
                 type="submit"
-                className="w-full h-14 bg-gradient-to-r from-primary via-primary to-accent hover:from-primary/90 hover:via-primary/90 hover:to-accent/90 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-3 rounded-xl"
+                className="w-full h-16 bg-gradient-to-r from-primary via-accent to-accent hover:from-primary/90 hover:via-accent/90 hover:to-accent/90 text-white font-bold text-xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center justify-center gap-3 rounded-xl border-2 border-white/20"
                 disabled={isLoading}
               >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-6 w-6 border-3 border-white/30 border-t-white"></div>
+                    <div className="animate-spin rounded-full h-7 w-7 border-3 border-white/30 border-t-white"></div>
                     <span>Minting Certificate...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="h-6 w-6" />
+                    <Send className="h-7 w-7" />
                     <span>Issue Certificate</span>
                   </>
                 )}
@@ -461,8 +461,8 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
           </TabsContent>
 
           <TabsContent value="batch" className="space-y-0">
-            <form onSubmit={handleBatchSubmit} className="space-y-8">
-              <div className="space-y-6">
+            <form onSubmit={handleBatchSubmit} className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center gap-2 pb-2 border-b border-border/50">
                   <div className="w-2 h-2 bg-primary rounded-full"></div>
                   <h3 className="text-lg font-semibold text-foreground">Upload Recipients</h3>
@@ -510,7 +510,7 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
               </div>
 
               {/* Batch Template */}
-              <div className="space-y-6">
+              <div className="space-y-4">
                 <div className="flex items-center gap-2 pb-2 border-b border-border/50">
                   <div className="w-2 h-2 bg-accent rounded-full"></div>
                   <h3 className="text-lg font-semibold text-foreground">Certificate Template</h3>
@@ -623,17 +623,17 @@ export function CertificateForm({ onSubmit, onBatchSubmit, isLoading }: Certific
 
               <Button
                 type="submit"
-                className="w-full h-14 bg-gradient-to-r from-primary via-primary to-accent hover:from-primary/90 hover:via-primary/90 hover:to-accent/90 text-white font-bold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-3 rounded-xl"
+                className="w-full h-16 bg-gradient-to-r from-primary via-accent to-accent hover:from-primary/90 hover:via-accent/90 hover:to-accent/90 text-white font-bold text-xl shadow-2xl hover:shadow-3xl transition-all duration-300 flex items-center justify-center gap-3 rounded-xl border-2 border-white/20"
                 disabled={isLoading || batchRecipients.length === 0}
               >
                 {isLoading ? (
                   <>
-                    <div className="animate-spin rounded-full h-6 w-6 border-3 border-white/30 border-t-white"></div>
+                    <div className="animate-spin rounded-full h-7 w-7 border-3 border-white/30 border-t-white"></div>
                     <span>Minting Certificates...</span>
                   </>
                 ) : (
                   <>
-                    <Send className="h-6 w-6" />
+                    <Send className="h-7 w-7" />
                     <span>
                       Issue {batchRecipients.length} Certificate{batchRecipients.length !== 1 ? "s" : ""}
                     </span>

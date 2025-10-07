@@ -1,16 +1,18 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { usePrivy } from "@privy-io/react-auth"
 import { Navigation } from "@/components/navigation"
 import { CertificateForm } from "@/components/certificate-form"
 import { CertificateList } from "@/components/certificate-list"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Shield, Award, Users, TrendingUp, Plus, List } from "lucide-react"
+import { Shield, Award, Users, TrendingUp, Plus, List, LogIn } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useCertificateMinting } from "@/hooks/use-certificate-minting"
 import { useToast } from "@/hooks/use-toast"
+import { Button } from "@/components/ui/button"
+import { Alert, AlertDescription } from "@/components/ui/alert"
 
 interface Certificate {
   id: string
@@ -26,19 +28,24 @@ interface Certificate {
 }
 
 export default function DashboardPage() {
-  const { ready, authenticated, user } = usePrivy()
+  const { ready, authenticated, user, login } = usePrivy()
   const router = useRouter()
   const { mintCertificate, mintBatchCertificates, isMinting } = useCertificateMinting()
   const { toast } = useToast()
   const [certificates, setCertificates] = useState<Certificate[]>([])
-
-  useEffect(() => {
-    if (ready && !authenticated) {
-      router.push("/")
-    }
-  }, [ready, authenticated, router])
+  const [activeTab, setActiveTab] = useState("issue")
 
   const handleCertificateSubmit = async (data: any) => {
+    if (!authenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "Please connect your wallet to issue certificates",
+        variant: "destructive",
+      })
+      login()
+      return
+    }
+
     try {
       // Create a new certificate entry with pending status
       const newCertificate: Certificate = {
@@ -105,6 +112,16 @@ export default function DashboardPage() {
   }
 
   const handleBatchCertificateSubmit = async (certificates: any[], recipients: any[]) => {
+    if (!authenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "Please connect your wallet to issue certificates",
+        variant: "destructive",
+      })
+      login()
+      return
+    }
+
     try {
       toast({
         title: "Batch Processing Started",
@@ -165,6 +182,16 @@ export default function DashboardPage() {
   }
 
   const handleRetryCertificate = async (certificate: Certificate) => {
+    if (!authenticated) {
+      toast({
+        title: "Authentication Required",
+        description: "Please connect your wallet to retry minting",
+        variant: "destructive",
+      })
+      login()
+      return
+    }
+
     try {
       // Update status to pending
       setCertificates((prev) =>
@@ -244,33 +271,41 @@ export default function DashboardPage() {
     )
   }
 
-  if (!authenticated) {
-    return null
-  }
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
-              <Award className="h-6 w-6 text-primary" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="mb-6">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center">
+                <Award className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-foreground tracking-tight">Dashboard</h1>
+                {authenticated && user?.wallet?.address && (
+                  <p className="text-muted-foreground font-medium">
+                    <span className="font-mono bg-muted/50 px-2 py-1 rounded-md text-primary">
+                      {user.wallet.address.slice(0, 6)}...{user.wallet.address.slice(-4)}
+                    </span>
+                  </p>
+                )}
+              </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground tracking-tight">Dashboard</h1>
-              <p className="text-muted-foreground font-medium">
-                Welcome back,{" "}
-                <span className="font-mono bg-muted/50 px-2 py-1 rounded-md text-primary">
-                  {user?.wallet?.address?.slice(0, 6)}...{user?.wallet?.address?.slice(-4)}
-                </span>
-              </p>
-            </div>
+            {!authenticated && (
+              <Button
+                onClick={() => login()}
+                className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white font-semibold shadow-lg"
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Connect Wallet
+              </Button>
+            )}
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
           <Card className="feature-card-hover border-0 shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium text-muted-foreground">Total Certificates</CardTitle>
@@ -333,18 +368,28 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        <Tabs defaultValue="issue" className="space-y-6">
+        {!authenticated && activeTab === "issue" && (
+          <Alert className="mb-6 border-primary/50 bg-primary/5">
+            <LogIn className="h-4 w-4 text-primary" />
+            <AlertDescription className="text-foreground">
+              <strong>Connect your wallet</strong> to issue certificates. You can browse the dashboard without logging
+              in.
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="bg-muted/50 p-1.5 rounded-xl h-14 shadow-inner">
             <TabsTrigger
               value="issue"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11 px-6"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-foreground data-[state=inactive]:hover:text-primary data-[state=inactive]:hover:bg-muted font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11 px-6"
             >
               <Plus className="h-5 w-5" />
               Issue Certificates
             </TabsTrigger>
             <TabsTrigger
               value="manage"
-              className="data-[state=active]:bg-primary data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-muted-foreground font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11 px-6"
+              className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-primary/90 data-[state=active]:text-white data-[state=active]:shadow-lg data-[state=inactive]:text-foreground data-[state=inactive]:hover:text-primary data-[state=inactive]:hover:bg-muted font-semibold transition-all duration-300 rounded-lg flex items-center gap-2 h-11 px-6"
             >
               <List className="h-5 w-5" />
               Manage Certificates
